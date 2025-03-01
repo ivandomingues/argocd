@@ -5,7 +5,7 @@ on:
     branches:
       - main  # Ou outro branch desejado
     paths:
-      - 'teste_site_web'  # Apenas mudanças nesse arquivo vão disparar a pipeline
+      - 'teste_site_web/**'  # Apenas mudanças nesse arquivo vão disparar a pipeline
 
 jobs:
   build:
