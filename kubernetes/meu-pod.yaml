@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: meu-app
-          image: <AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/<ECR_REPOSITORY>:latest
+          image: <AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/ivan-ecr:latest
           ports:
             - containerPort: 80
 ---
