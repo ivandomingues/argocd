@@ -26,18 +26,18 @@ jobs:
 
     - name: Construir imagem Docker
       run: |
-        docker build -t ivandomingues/ivan-teste::latest .
+        docker build -t ivandomingues/ivan-teste:latest .
 
     - name: Criar tag para a imagem
       run: |
-        docker tag ivandomingues/ivan-teste::latest
+        docker tag ivandomingues/ivan-teste:latest
 
     - name: Enviar imagem para o Docker Hub
       run: |
-        docker push ivandomingues/ivan-teste::latest
+        docker push ivandomingues/ivan-teste:latest
 
     - name: Limpeza
       run: |
-        docker rmi ivandomingues/ivan-teste::latest
+        docker rmi ivandomingues/ivan-teste:latest
 
 
