@@ -1,34 +1,42 @@
-name: Build and Push Docker Image to AWS ECR
+name: Build and Push Docker Image to ECR
 
 on:
   push:
     branches:
-      - main  # Ou outro branch desejado
-    paths:
-      - 'teste_site_web/**'  # Apenas mudanças nesse arquivo vão disparar a pipeline
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout código
-      uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-    - name: Configurar credenciais AWS
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-west-2  # Modifique conforme a sua região
-
-    - name: Configurar credenciais Docker ECR
-      run: |
-        aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-west-2.amazonaws.com
-
-    - name: Configurar Docker Buildx
+    - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
-    - name: Construir e enviar imagem Docker para AWS ECR
+    - name: Configure AWS CLI
       run: |
-        docker buildx build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-west-2.amazonaws.com/ivan-teste:latest --push .
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set region ${{ secrets.AWS_REGION }}
+
+    - name: Log in to Amazon ECR
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ secrets.ECR_REPOSITORY }} .
+
+    - name: Tag Docker image
+      run: |
+        docker tag ${{ secrets.ECR_REPOSITORY }}:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
+
+    - name: Push Docker image to Amazon ECR
+      run: |
+        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
+
+    - name: Clean up
+      run: |
+        docker rmi ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
