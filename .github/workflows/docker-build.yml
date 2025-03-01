@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main  # Ou outro branch desejado
+    paths:
+      - 'teste_site_web/index'  # Apenas mudanças nesse arquivo vão disparar a pipeline
 
 jobs:
   build:
