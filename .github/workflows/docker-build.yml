@@ -21,7 +21,7 @@ jobs:
 
     - name: Construir e enviar imagem Docker para o GitLab Container Registry
       run: |
-        docker buildx build -t https://gitlab.com/ivan.domingues1/testes-deploy.git:latest --push .
+        docker buildx build -t docker buildx build -t registry.gitlab.com/ivan.domingues1/testes-deploy/ivan-teste:latest --push .
 
     - name: Limpeza (opcional)
-      run: docker rmi https://gitlab.com/ivan.domingues1/testes-deploy.git:latest
+      run: docker rmi egistry.gitlab.com/ivan.domingues1/testes-deploy/ivan-teste:latest
