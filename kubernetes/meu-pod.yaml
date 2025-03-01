@@ -19,22 +19,24 @@ spec:
           image: 308033146551.dkr.ecr.us-east-2.amazonaws.com/ivan-teste:latest  # A URL pública do ECR.
           ports:
             - containerPort: 80
+      imagePullSecrets:
+        - name: ecr-registry-secret  # O segredo que você criou para autenticação no ECR.
 
----
+
 apiVersion: v1
 kind: Service
 metadata:
   name: nginx-service
 spec:
   selector:
-    app: nginx-service
+    app: nginx-server  # Esse selector deve ser o mesmo usado no Deployment
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
   type: NodePort  # O Minikube expõe serviços via NodePort
 
----
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -50,8 +52,30 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: nginx-server-service
+                name: nginx-service
                 port:
                   number: 80
+
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-deployment-ecr
+  namespace: argocd  # Namespace onde o ArgoCD está instalado
+spec:
+  destination:
+    namespace: default  # Namespace onde o serviço será implantado
+    server: https://kubernetes.default.svc  # URL do cluster Kubernetes
+  project: default
+  source:
+    repoURL: 'git@github.com:ivandomingues/argocd.git'  # URL do seu repositório Git
+    targetRevision: HEAD  # A branch ou commit do repositório Git
+    path: 'kubernetes'  # Caminho no repositório onde os manifestos YAML estão
+  syncPolicy:
+    automated:
+      prune: true  # Para remover objetos antigos
+      selfHeal: true  # Para curar automaticamente o estado
+    syncOptions:
+      - CreateNamespace=true  # Para criar o namespace se ele não existir
 
 
