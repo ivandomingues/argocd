@@ -1,11 +1,11 @@
-name: Build and Push Docker Image to GitLab Container Registry
+name: Build and Push Docker Image to AWS ECR
 
 on:
   push:
     branches:
-      - main  # Dispara a pipeline apenas em mudanças na branch main
+      - main  # Ou outro branch desejado
     paths:
-      - 'teste_site_web/**'  # Apenas mudanças nesse diretório disparam a pipeline
+      - 'teste_site_web/**'  # Apenas mudanças nesse arquivo vão disparar a pipeline
 
 jobs:
   build:
@@ -15,13 +15,20 @@ jobs:
     - name: Checkout código
       uses: actions/checkout@v4
 
-    
+    - name: Configurar credenciais AWS
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-west-2  # Modifique conforme a sua região
+
+    - name: Configurar credenciais Docker ECR
+      run: |
+        aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-west-2.amazonaws.com
+
     - name: Configurar Docker Buildx
       uses: docker/setup-buildx-action@v2
 
-    - name: Construir e enviar imagem Docker para o GitLab Container Registry
+    - name: Construir e enviar imagem Docker para AWS ECR
       run: |
-        docker buildx build -t docker buildx build -t registry.gitlab.com/ivan.domingues1/testes-deploy/ivan-teste:latest --push .
-
-    - name: Limpeza (opcional)
-      run: docker rmi egistry.gitlab.com/ivan.domingues1/testes-deploy/ivan-teste:latest
+        docker buildx build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-west-2.amazonaws.com/ivan-teste:latest --push .
