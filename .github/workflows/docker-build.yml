@@ -18,7 +18,7 @@ jobs:
     - name: Configurar credenciais Docker Hub
       uses: docker/login-action@v2
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}  # Nome de usuário do Docker Hub
+        username: ivandomingues  # Nome de usuário do Docker Hub
         password: ${{ secrets.DOCKER_PASSWORD }}  # Senha ou token de acesso do Docker Hub
 
     - name: Configurar Docker Buildx
@@ -26,8 +26,8 @@ jobs:
 
     - name: Construir e enviar imagem Docker para o Docker Hub
       run: |
-        docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/ivan-teste:latest . --push
+        docker buildx build -t ivandomingues/ivan-teste:latest . --push
 
     - name: Limpeza
       run: |
-        docker rmi ${{ secrets.DOCKER_USERNAME }}/ivan-teste:latest
+        docker rmi ivandomingues/ivan-teste:latest
