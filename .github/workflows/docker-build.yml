@@ -26,18 +26,13 @@ jobs:
 
     - name: Construir imagem Docker
       run: |
-        docker buildx build -t docker build -t ${{ secrets.DOCKER_USERNAME }}/ivan-teste:latest .
-
-
-    - name: Criar tag para a imagem
-      run: |
-        docker tag docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/ivan-teste:latest
+        docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/ivan-teste:latest .
 
     - name: Enviar imagem para o Docker Hub
       run: |
-        docker push docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/ivan-teste:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/ivan-teste:latest
 
     - name: Limpeza
       run: |
-        docker rmi docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/ivan-teste:latest
+        docker rmi ${{ secrets.DOCKER_USERNAME }}/ivan-teste:latest
 
