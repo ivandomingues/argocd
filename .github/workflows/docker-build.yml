@@ -31,7 +31,7 @@ jobs:
 
     - name: Enviar Imagem ao repo Dockerhub
       run: |
-        docker tag latest:latest ivandomingues/ivan-teste:latest
+        docker tag latest:latest ivandomingues/latest:latest
 
     # - name: Limpeza
     #   run: |
