@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testenginx-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: testenginx
+  template:
+    metadata:
+      labels:
+        app: testenginx
+    spec:
+      containers:
+      - name: testenginx
+        image: testenginx:latest  # Nome da imagem carregada
+        ports:
+        - containerPort: 80
+
