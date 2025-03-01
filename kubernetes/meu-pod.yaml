@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:latest
+          image: nginx:latest
           ports:
             - containerPort: 80
 ---
