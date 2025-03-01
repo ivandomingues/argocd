@@ -26,12 +26,12 @@ jobs:
 
     - name: Construir e enviar imagem Docker para o Docker Hub
       run: |
-        docker buildx build --push -t ivandomingues/ivan-teste:latest .
+        docker buildx build -t ivandomingues/ivan-teste:latest .
 
 
-    # - name: Enviar Imagem ao repo Dockerhub
-    #   run: |
-    #     docker push ivandomingues/ivan-teste:latest 
+    - name: Enviar Imagem ao repo Dockerhub
+      run: |
+        docker tag latest:latest ivandomingues/ivan-teste:latest
 
     # - name: Limpeza
     #   run: |
