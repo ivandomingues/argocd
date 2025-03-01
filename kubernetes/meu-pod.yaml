@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nginx-server
-          image: 308033146551.dkr.ecr.us-east-2.amazonaws.com/ivan-teste:latest  # A URL pública do ECR
+          image: 308033146551.dkr.ecr.us-east-2.amazonaws.com/ivan-teste:latest  # A URL pública do ECR.
           ports:
             - containerPort: 80
 
