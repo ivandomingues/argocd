@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: richarvey/nginx-php-fpm
+          image: nanoserver:ltsc2025
           ports:
             - containerPort: 80
 ---
