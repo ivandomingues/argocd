@@ -1,4 +1,4 @@
-name: Build and Push Docker Image to ECR
+name: Build and Push Docker Image to Docker Hub
 
 on:
   push:
@@ -15,36 +15,30 @@ jobs:
     - name: Checkout código
       uses: actions/checkout@v4
 
-    - name: Configurar credenciais AWS
-      uses: aws-actions/configure-aws-credentials@v2
+    - name: Configurar credenciais Docker Hub
+      uses: docker/login-action@v2
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_REGION }}
-
-    - name: Logar no Amazon ECR
-      id: login-ecr
-      run: |
-        aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
-        docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+        username: ${{ secrets.DOCKER_USERNAME }}  # Nome de usuário do Docker Hub
+        password: ${{ secrets.DOCKER_PASSWORD }}  # Senha ou token de acesso do Docker Hub
 
     - name: Configurar Docker Buildx
       uses: docker/setup-buildx-action@v2
 
     - name: Construir imagem Docker
       run: |
-        docker build -t ${{ secrets.ECR_REPOSITORY }}:latest .
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest .
 
     - name: Criar tag para a imagem
       run: |
-        docker tag ${{ secrets.ECR_REPOSITORY }}:latest \
-        ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
+        docker tag ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest \
+        ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
 
-    - name: Enviar imagem para o Amazon ECR
+    - name: Enviar imagem para o Docker Hub
       run: |
-        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
 
     - name: Limpeza
       run: |
-        docker rmi ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
+        docker rmi ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
+
 
