@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: nanoserver:ltsc2025
+          image: library/hello-world
           ports:
             - containerPort: 80
 ---
