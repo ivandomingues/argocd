@@ -24,15 +24,10 @@ jobs:
     - name: Configurar Docker Buildx
       uses: docker/setup-buildx-action@v2
 
-    - name: Construir imagem Docker
+    - name: Construir e enviar imagem Docker para o Docker Hub
       run: |
-        docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/ivan-teste:latest .
-
-    - name: Enviar imagem para o Docker Hub
-      run: |
-        docker push ${{ secrets.DOCKER_USERNAME }}/ivan-teste:latest
+        docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/ivan-teste:latest . --push
 
     - name: Limpeza
       run: |
         docker rmi ${{ secrets.DOCKER_USERNAME }}/ivan-teste:latest
-
