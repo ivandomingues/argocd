@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app: nginx
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: nginx:latest  # Aqui você pode usar qualquer versão do Nginx, ou até mesmo uma imagem customizada
+          image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:latest
           ports:
             - containerPort: 80
 ---
