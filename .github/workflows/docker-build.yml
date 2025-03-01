@@ -30,8 +30,7 @@ jobs:
 
     - name: Criar tag para a imagem
       run: |
-        docker tag ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest \
-        ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
+        docker tag ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest .
 
     - name: Enviar imagem para o Docker Hub
       run: |
