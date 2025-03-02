@@ -14,14 +14,13 @@ spec:
       labels:
         app: nginx-server
     spec:
-      imagePullSecrets:
-        - name: ecr-registry-secret  # Certifique-se que esse nome está correto
       containers:
         - name: nginx-server
-          image: a0597fa563a8:latest  # A URL do ECR
+          image: nginx:latest  # Usando a imagem oficial do Nginx
           ports:
             - containerPort: 80
-
+      imagePullSecrets:
+        - name: ecr-registry-secret  # Caso você ainda precise de algum segredo de pull (não é necessário para imagens públicas)
 
 
 apiVersion: v1
@@ -78,5 +77,3 @@ spec:
       selfHeal: true  # Para curar automaticamente o estado
     syncOptions:
       - CreateNamespace=true  # Para criar o namespace se ele não existir
-
-
