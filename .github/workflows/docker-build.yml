@@ -41,5 +41,7 @@ jobs:
         echo "Imagem Docker 'ivan-teste:latest' empurrada para o Docker Hub em $(date)" >> monitor.txt
         git add monitor.txt
         git commit -m "Incremental update no monitor.txt após o push da imagem Docker"
-        git push
-      shell: bash
+        # Usar o GITHUB_TOKEN para autenticação
+        git push https://github.com/${{ secrets.GITHUB_USER }}/argocd.git HEAD:main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Usar o token para autenticação
