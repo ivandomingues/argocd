@@ -34,6 +34,9 @@ jobs:
       run: |
         git clone https://github.com/ivandomingues/argocd.git  # Clonar o repositório monitorado pelo ArgoCD
         cd argocd/kubernetes
+        # Configurar identidade do Git
+        git config --global user.email "ivan.domingues@elven.works"
+        git config --global user.name "GitHub Actions"
         # Incrementar a data/hora ou alguma outra informação relevante
         echo "Imagem Docker 'ivan-teste:latest' empurrada para o Docker Hub em $(date)" >> monitor.txt
         git add monitor.txt
