@@ -29,15 +29,3 @@ jobs:
     - name: Push Docker image to Docker Hub
       run: |
         docker push ivandomingues/ivan-teste:latest
-
-    - name: Trigger ArgoCD sync (Git commit)
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git clone https://github.com/ivandomingues/argocd-repo.git  # Clonar o repositório monitorado pelo ArgoCD
-        cd kubernetes
-        # Atualize um arquivo no diretório monitorado, como um arquivo de "marca" ou manifestos
-        echo "Atualizando imagem Docker para a tag latest" > monitora.txt
-        git add .
-        git commit -m "Atualização da imagem Docker para a tag latest"
-        git push
