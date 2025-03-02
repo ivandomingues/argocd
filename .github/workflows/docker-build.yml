@@ -42,6 +42,6 @@ jobs:
         git add monitor.txt
         git commit -m "Incremental update no monitor.txt após o push da imagem Docker"
         # Usar o GITHUB_TOKEN para autenticação
-        git push https://github.com/${{ secrets.GITHUB_USER }}/argocd.git HEAD:main
+        git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ secrets.GITHUB_USER }}/argocd.git HEAD:main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Usar o token para autenticação
