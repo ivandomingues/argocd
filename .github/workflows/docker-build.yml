@@ -30,12 +30,13 @@ jobs:
       run: |
         docker push ivandomingues/ivan-teste:latest
 
-        - name: Update monitor.txt with incremental comment
-        run: |
-          git clone https://github.com/ivandomingues/argocd-repo.git  # Clonar o repositório monitorado pelo ArgoCD
-          cd argocd-repo/kubernetes
-          # Incrementar a data/hora ou alguma outra informação relevante
-          echo "Imagem Docker 'ivan-teste:latest' empurrada para o Docker Hub em $(date)" >> monitor.txt
-          git add monitor.txt
-          git commit -m "Incremental update no monitor.txt após o push da imagem Docker"
-          git push
+    - name: Update monitor.txt with incremental comment
+      run: |
+        git clone https://github.com/***/argocd-repo.git  # Clonar o repositório monitorado pelo ArgoCD
+        cd argocd-repo/kubernetes
+        # Incrementar a data/hora ou alguma outra informação relevante
+        echo "Imagem Docker 'ivan-teste:latest' empurrada para o Docker Hub em $(date)" >> monitor.txt
+        git add monitor.txt
+        git commit -m "Incremental update no monitor.txt após o push da imagem Docker"
+        git push
+      shell: bash
