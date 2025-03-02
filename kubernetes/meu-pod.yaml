@@ -19,8 +19,6 @@ spec:
           image: nginx:latest  # Usando a imagem oficial do Nginx
           ports:
             - containerPort: 80
-      imagePullSecrets:
-        - name: ecr-registry-secret  # Caso você ainda precise de algum segredo de pull (não é necessário para imagens públicas)
 
 
 apiVersion: v1
@@ -68,7 +66,7 @@ spec:
     server: https://kubernetes.default.svc  # URL do cluster Kubernetes
   project: default
   source:
-    repoURL: 'git@github.com:ivandomingues/argocd.git'  # URL do seu repositório Git
+    repoURL: https://github.com/ivandomingues/argocd.git'  # URL do seu repositório Git
     targetRevision: HEAD  # A branch ou commit do repositório Git
     path: 'kubernetes'  # Caminho no repositório onde os manifestos YAML estão
   syncPolicy:
