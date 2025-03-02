@@ -3,11 +3,7 @@ name: Docker Build and Push
 on:
   push:
     paths:
-      - teste_site_web       # Ou qualquer arquivo específico para monitorar mudanças
-  # pull_request:
-  #   paths:
-  #     - Dockerfile
-  #     - '**/*.py'
+      - teste_site_web/**  # Verifica qualquer alteração no diretório "teste_site_web" ou seus subdiretórios
 
 jobs:
   build:
