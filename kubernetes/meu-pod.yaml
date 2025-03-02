@@ -5,7 +5,7 @@ metadata:
   labels:
     app: minha-aplicacao
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: minha-aplicacao
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: minha-aplicacao
-        image: 308033146551.dkr.ecr.us-east-2.amazonaws.com/ivan-teste:latest # Substitua com a imagem do seu repositório
+        image: nginx:latest # Substitua com a imagem do seu repositório
         ports:
         - containerPort: 80
 ---
