@@ -14,13 +14,14 @@ spec:
       labels:
         app: nginx-server
     spec:
+      imagePullSecrets:
+        - name: ecr-registry-secret  # Certifique-se que esse nome está correto
       containers:
         - name: nginx-server
-          image: 308033146551.dkr.ecr.us-east-2.amazonaws.com/ivan-teste:latest  # A URL pública do ECR.
+          image: 308033146551.dkr.ecr.us-east-2.amazonaws.com/ivan-teste:latest  # A URL do ECR
           ports:
             - containerPort: 80
-      imagePullSecrets:
-        - name: ecr-registry-secret  # O segredo que você criou para autenticação no ECR.
+
 
 
 apiVersion: v1
