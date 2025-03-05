@@ -60,15 +60,14 @@ jobs:
         contador=1
         contador=$((contador + 1))
         echo "O valor do contador é: $contador"
-        export contador
 
     - name: Build Docker image
       run: |
-        docker build -t "ivandomingues/ivan-teste:v$(contador)" .
+        docker build -t ivandomingues/ivan-teste:v$(contador) .
 
     - name: Push Docker image to Docker Hub
       run: |
-        docker push "ivandomingues/ivan-teste:v$(contador)"
+        docker push ivandomingues/ivan-teste:v$(contador)
 
     - name: Write to monitor.txt
       run: |
