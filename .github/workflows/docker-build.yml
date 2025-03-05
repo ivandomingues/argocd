@@ -58,10 +58,8 @@ jobs:
       id: get_latest_tag
       run: |
         latest_tag= 1
-        #latest_version_number=$(echo $latest_tag | sed 's/v\([0-9]\+\)/\1/')
         next_version=$((latest_tag + 1))
         export next_version
-        # latest_tag="v$next_version"
 
     - name: Build Docker image
       run: |
