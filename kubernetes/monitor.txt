@@ -1,1 +1,2 @@
 1Imagem ivandomingues/ivan-teste:latest foi atualizada em Wed Mar  5 13:18:40 UTC 2025
+Imagem ivandomingues/ivan-teste:v1 foi atualizada em Wed Mar  5 13:56:31 UTC 2025
