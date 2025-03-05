@@ -43,7 +43,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
@@ -67,3 +67,7 @@ jobs:
         echo "Imagem ivandomingues/ivan-teste:latest foi atualizada em $(date)" >> kubernetes/monitor.txt
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Necessário para escrita no repositório
+
+    - uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: Pipe codou fofamente!
