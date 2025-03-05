@@ -56,25 +56,23 @@ jobs:
 
     - name: Contagem de Versões (local increment)
       id: get_latest_tag
-      run: |
-        contador=1
-        contador=$((contador + 1))
-        echo "O valor do contador é: $contador"
+      run: echo "version=1.0.$(date +%s)" >> $GITHUB_ENV
 
     - name: Build Docker image
       run: |
-        docker build -t ivandomingues/ivan-teste:v$(contador) .
+        docker build -t ivandomingues/ivan-teste:${{ env.version }} .
 
     - name: Push Docker image to Docker Hub
       run: |
-        docker push ivandomingues/ivan-teste:v$(contador)
+        docker push ivandomingues/ivan-teste:${{ env.version }}
 
     - name: Write to monitor.txt
       run: |
-        echo "Imagem ivandomingues/ivan-teste:v$(contador) foi atualizada em $(date)" >> kubernetes/monitor.txt
+        echo "Imagem ivandomingues/ivan-teste:${{ env.version }} foi atualizada em $(date)" >> kubernetes/monitor.txt
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Necessário para escrita no repositório
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message: Pipe codou fofamente por versão!
+        commit_message: "Pipe codou fofamente por versão!"
+
