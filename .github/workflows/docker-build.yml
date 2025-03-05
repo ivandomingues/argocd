@@ -54,24 +54,25 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}  # Adicione suas credenciais no GitHub Secrets
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Get the latest version tag (local increment)
+    - name: Contagem de Versões (local increment)
       id: get_latest_tag
       run: |
-        latest_tag= 1
-        next_version=$((latest_tag + 1))
-        export next_version
+        contador=1
+        contador=$((contador + 1))
+        echo "O valor do contador é: $contador"
+        export contador
 
     - name: Build Docker image
       run: |
-        docker build -t ivandomingues/ivan-teste:v$next_version .
+        docker build -t ivandomingues/ivan-teste:v$contador .
 
     - name: Push Docker image to Docker Hub
       run: |
-        docker push ivandomingues/ivan-teste:v$next_version
+        docker push ivandomingues/ivan-teste:v$contador
 
     - name: Write to monitor.txt
       run: |
-        echo "Imagem ivandomingues/ivan-teste:v$next_version foi atualizada em $(date)" >> kubernetes/monitor.txt
+        echo "Imagem ivandomingues/ivan-teste:v$contador foi atualizada em $(date)" >> kubernetes/monitor.txt
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Necessário para escrita no repositório
 
