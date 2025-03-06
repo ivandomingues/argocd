@@ -11,3 +11,4 @@ Imagem ivandomingues/ivan-teste:v1.0.1741198356 foi atualizada em Thu Mar  6 20:
 Imagem ivandomingues/ivan-teste:vv1741198357 foi atualizada em Thu Mar  6 20:13:34 UTC 2025
 Imagem ivandomingues/ivan-teste:v1 foi atualizada em Thu Mar  6 20:20:06 UTC 2025
 Imagem ivandomingues/ivan-teste:v2 foi atualizada em Thu Mar  6 20:21:53 UTC 2025
+Imagem ivandomingues/ivan-teste:v3 foi atualizada em Thu Mar  6 20:43:05 UTC 2025
