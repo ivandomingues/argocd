@@ -26,8 +26,8 @@ jobs:
       id: get_latest_tag
       run: |
         LATEST_TAG=$(curl -s "https://hub.docker.com/v2/repositories/ivandomingues/ivan-teste/tags?page_size=1" | jq -r '.results[0].name' | grep -Eo '[0-9]+$' || echo "0")
-        NEW_TAG=$((LATEST_TAG + 1))
-        echo "version=1.0.$NEW_TAG" >> $GITHUB_ENV
+        NEW_TAG=v$((LATEST_TAG + 1))
+        echo "version=$NEW_TAG" >> $GITHUB_ENV
 
 
     - name: Build Docker image
