@@ -1,0 +1,49 @@
+name: Docker Build and Push
+
+on:
+  push:
+    paths:
+      - teste_site_web/**  # Verifica qualquer alteração no diretório "teste_site_web" ou seus subdiretórios
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}  # Adicione suas credenciais no GitHub Secrets
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Get latest tag from Docker Hub
+      id: get_latest_tag
+      run: |
+        LATEST_TAG=$(curl -s "https://hub.docker.com/v2/repositories/ivandomingues/ivan-teste/tags?page_size=1" | jq -r '.results[0].name' | grep -Eo '[0-9]+$' || echo "0")
+        NEW_TAG=$((LATEST_TAG + 1))
+        echo "version=1.0.$NEW_TAG" >> $GITHUB_ENV
+
+
+    - name: Build Docker image
+      run: |
+        docker build -t ivandomingues/ivan-teste:v${{ env.version }} .
+
+    - name: Push Docker image to Docker Hub
+      run: |
+        docker push ivandomingues/ivan-teste:v${{ env.version }}
+
+    - name: Write to monitor.txt
+      run: |
+        echo "Imagem ivandomingues/ivan-teste:v${{ env.version }} foi atualizada em $(date)" >> kubernetes/monitor.txt
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "Pipe codou fofamente por versão!"
