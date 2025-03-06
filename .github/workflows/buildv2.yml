@@ -43,6 +43,13 @@ jobs:
         echo "Imagem ivandomingues/ivan-teste:v${{ env.version }} foi atualizada em $(date)" >> kubernetes/monitor.txt
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name : Write new version in deployment
+      run: |
+        VERSAO=${{ env.version }}
+        export VERSION=$VERSAO 
+        envsubst < meu-pod.tpl.yaml > kubernetes/meu-pod.yaml
+        cat kubernetes/meu-pod.yaml
 
     - uses: stefanzweifel/git-auto-commit-action@v5
       with:
