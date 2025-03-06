@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: minha-aplicacao
-        image: ivandomingues/ivan-teste:v7 # Substitua com a imagem do seu repositório
+        image: ivandomingues/ivan-teste:v8 # Substitua com a imagem do seu repositório
         ports:
         - containerPort: 80
 ---
